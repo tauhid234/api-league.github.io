@@ -1,17 +1,17 @@
 <html>
     <head></head>
-    <body>
-        <H1 style="color: aqua;">HELLO WORD</H1>
-        <table style="text-align: center; width: 100%;" border="1px">
-            <tr style="color: brown;">
+    <body style="background-color: black;">
+        <H1 style="color: aqua; text-align: center;">KASUS COVID DI SELURUH DUNIA</H1>
+        <table style="text-align: center; width: 100%; color: white;" border="1px">
+            <tr>
                 <th>TOTAL POSITIF</th>
                 <th>TOTAL SEMBUH</th>
                 <th>TOTAL MENINGGAL</th>
             </tr>
             <tr>
-                <td>100</td>
-                <td>100</td>
-                <td>100</td>
+                <td id="positif">100</td>
+                <td id="sembuh">100</td>
+                <td id="meninggal">100</td>
             </tr>
         </table>
     </body>
@@ -19,15 +19,22 @@
     <script defer>
 
         var xml = new XMLHttpRequest();
+        xml.open("GET","https://covid19.mathdro.id/api");
+        
         xml.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 console.log(xml.responseText);
                 let data = JSON.parse(xml.responseText);
-                console.log(data);
+                let a = document.getElementById("positif");
+                let b = document.getElementById("sembuh");
+                let c = document.getElementById("meninggal");
+                a.innerHTML = data.confirmed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                b.innerHTML = data.recovered.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+                c.innerHTML = data.deaths.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+                console.log(data.confirmed.value);
             }
         };
 
-        xml.open("GET","https://covid19.mathdro.id/api");
         xml.send();
 
     </script>
