@@ -16,17 +16,19 @@
         </table>
     </body>
 
-    <script type="text/javascript">
+    <script defer>
 
-      function reqListener () {
-        console.log(this.responseText);
-      }
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                console.log(xml.responseText);
+                let data = JSON.parse(xml.responseText);
+                console.log(data);
+            }
+        };
 
-      var oReq = new XMLHttpRequest();
-      oReq.open("GET", "https://covid19.mathdro.id/api");
-      oReq.addEventListener("load", reqListener);
-      oReq.setRequestHeader( 'Access-Control-Allow-Origin', '*');
-      // oReq.open("GET", "http://www.example.org/example.txt");
-      oReq.send();
+        xml.open("GET","https://covid19.mathdro.id/api");
+        xml.send();
+
     </script>
 </html>
