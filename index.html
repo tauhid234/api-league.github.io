@@ -1,37 +1,49 @@
 <html>
     <head></head>
-    <body style="background-color: black;">
-        <H1 style="color: aqua; text-align: center;">KASUS COVID DI SELURUH DUNIA</H1>
-        <table style="text-align: center; width: 100%; color: white;" border="1px">
-            <tr>
-                <th>TOTAL POSITIF</th>
-                <th>TOTAL SEMBUH</th>
-                <th>TOTAL MENINGGAL</th>
-            </tr>
-            <tr>
-                <td id="positif">100</td>
-                <td id="sembuh">100</td>
-                <td id="meninggal">100</td>
-            </tr>
+    <body>
+        <H1 style="color: chocolate; text-align: center;">API FOOTBAL LEAGUES</H1>
+        <table style="text-align: center; width: 100%;" border="1px" id="tableleagues">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>SLUG</th>
+                    <th>LOGO</th>
+                </tr>
+            </thead>
+            <tbody id="data-body">
+                
+            </tbody>
         </table>
     </body>
 
     <script defer>
 
         var xml = new XMLHttpRequest();
-        xml.open("GET","https://covid19.mathdro.id/api");
+        xml.open("GET","https://api-football-standings.azharimm.site/leagues");
         
         xml.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                console.log(xml.responseText);
+                // console.log(xml.responseText);
                 let data = JSON.parse(xml.responseText);
-                let a = document.getElementById("positif");
-                let b = document.getElementById("sembuh");
-                let c = document.getElementById("meninggal");
-                a.innerHTML = data.confirmed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                b.innerHTML = data.recovered.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
-                c.innerHTML = data.deaths.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
-                console.log(data.confirmed.value);
+                // let a = document.getElementById("positif");
+                // let b = document.getElementById("sembuh");
+                // let c = document.getElementById("meninggal");
+                // a.innerHTML = data.confirmed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                // b.innerHTML = data.recovered.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+                // c.innerHTML = data.deaths.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+                console.log(data.data);
+                let output = data.data;
+                let temp = "";
+                output.forEach(item =>{
+                    temp += "<tr>";
+                    temp += "<td>"+item.id+"</td>";
+                    temp += "<td>"+item.name+"</td>";
+                    temp += "<td>"+item.slug+"</td>";
+                    temp += "<td><image src='"+item.logos.light+"' style='width:50px'></td></tr>";
+                })
+
+                document.getElementById("data-body").innerHTML = temp;
             }
         };
 
